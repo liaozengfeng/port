@@ -14,69 +14,64 @@
 Route::get('/', function () {
     return view('welcome');
 });
-// ---------------------------------------------------------------------wechat--------------------------------------
-Route::any('/wechat/index','wechat\WechatController@index');
-Route::any('/wechat/test','wechat\WechatController@test');
 
-Route::any('/week/index','wechat\WeekController@index');
-Route::any('/test/qrcode','wechat\TestController@qrcode');
-Route::any('/test/menu','wechat\TestController@menu');
+        //登录
+        Route::any('/login/login','login\LoginController@login');
+        //注册
+        Route::any('/login/register','login\LoginController@register');
 
 
-Route::any('/week/test','wechat\WeekController@test');
+Route::group(['middleware'=>['Login']],function(){
+        //退出登录
+        Route::any('/login/login_out','login\LoginController@login_out');
 
-
-
-
-
-//--------------------------------------------------------------------Backstage project Management（后台项目管理）
-
-//--------------------------------------------------------------------Login
-Route::any('/login/login','login\LoginController@login');
-//--执行
-Route::any('/login/do_login','login\LoginController@do_login');
-Route::any('/login/acquire','login\LoginController@acquire');
-//Route::group(['middleware'=>['Login']],function(){
-     //Admin_index
+        //Admin_index
 		Route::any('/admin/index','admin\AdminController@index');
-		Route::any('/admin/index_v1','admin\AdminController@index_v1');
+		Route::any('/admin/update','admin\AdminController@update');
+		//权限
+		Route::any('/admin/permission/index','admin\PermissionController@index');
+		//导航
+		Route::any('/admin/navigation/save','admin\NavigationController@save');  //添加
+		Route::any('/admin/navigation/show','admin\NavigationController@show');  //展示
+		Route::any('/admin/navigation/delete','admin\NavigationController@delete');  //删除
+		Route::any('/admin/navigation/search','admin\NavigationController@search');  //搜索
 
-		//logout
-		Route::any('/login/logout','login\LoginController@logout');
-		
-		//Register
-		Route::any('/admin/register','admin\AdminController@register');
-			//执行
-		Route::any('/admin/do_register','admin\AdminController@do_register');
-		//show
-		Route::any('/admin/show','admin\AdminController@show');
-			//Delete
-		Route::any('/admin/Del','admin\AdminController@Del');
+        //分类
+        Route::any('/admin/cart/save','admin\CartController@save');  //添加
+        Route::any('/admin/cart/show','admin\CartController@show');  //展示
+        Route::any('/admin/cart/delete','admin\CartController@delete');  //删除
+        Route::any('/admin/cart/search','admin\CartController@search');  //搜索
+        Route::any('/admin/cart/edit','admin\CartController@edit');  //修改展示
+        Route::any('/admin/cart/update','admin\CartController@update');  //修改执行
 
-		//------------------------------AdminHome
-		Route::any('/admin/home','admin\AdminController@home');
-		//------------------------------执行天气接口
-		Route::any('/admin/getWeather','admin\AdminController@getWeather');
-		
-		// ----------------------------------------文件上传
-		Route::any('/media/upload','media\MediaController@upload');
-		Route::any('/media/do_upload','media\MediaController@do_upload');
-		//------------------------------------------素材展示
-		Route::any('/media/upload_show','media\MediaController@upload_show');
-		//------------------------------------------渠道添加
-		Route::any('/channel/create','channel\ChannelController@create');
-		Route::any('/channel/do_create','channel\ChannelController@do_create');
-		//------------------------------------------渠道展示
-		Route::any('/channel/create_show','channel\ChannelController@create_show');
-		//------------------------------------------图表展示
-		Route::any('/channel/chart_show','channel\ChannelController@chart_show');
+        //轮播
+        Route::any('/admin/carousel/save','admin\CarouselController@save');  //添加
+        Route::any('/admin/carousel/show','admin\CarouselController@show');  //展示
+        Route::any('/admin/carousel/delete','admin\CarouselController@delete');  //删除
+
+        //广告
+        Route::any('/admin/advertising/save','admin\AdvertisingController@save');  //添加
+        Route::any('/admin/advertising/save_file','admin\AdvertisingController@save_file');  //添加
+        Route::any('/admin/advertising/show','admin\AdvertisingController@show');  //展示
+        Route::any('/admin/advertising/delete','admin\AdvertisingController@delete');  //删除
+
+        //新闻
+        Route::any('/admin/news/save','admin\NewsController@save');  //添加
+        Route::any('/admin/news/show','admin\NewsController@show');  //展示
+        Route::any('/admin/news/delete','admin\NewsController@delete');  //删除
+        Route::any('/admin/news/save_file','admin\NewsController@save_file');  //文件上传
+        Route::any('/admin/news/search','admin\NewsController@search');  //搜索
+        Route::any('/admin/news/edit','admin\NewsController@edit');  //修改展示
+        Route::any('/admin/news/update','admin\NewsController@update');  //修改执行
+
+        //友链
+        Route::any('/admin/link/save','admin\LinksController@save');  //添加
+        Route::any('/admin/link/show','admin\LinksController@show');  //展示
+        Route::any('/admin/link/delete','admin\LinksController@delete');  //删除
+        Route::any('/admin/link/search','admin\LinksController@search');  //搜索
 
 
-		
-
-		
-
-//});
+});
 
 
 

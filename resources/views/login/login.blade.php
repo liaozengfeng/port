@@ -31,26 +31,24 @@
                 <h1 class="logo-name">L</h1>
 
             </div>
-            <h3>Your most like Mr.Liu</h3>
+            <h3>login / <a href="/login/register">Register</a></h3>
 
-            <form class="m-t" role="form" action="do_login" method="post">
+            <form class="m-t" role="form" action="javascript:;">
                 @csrf
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="username" required="" name="username">
+                    <input type="text" class="form-control" placeholder="username" required="" id="username">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="password" required="" name="pwd">
+                    <input type="password" class="form-control" placeholder="password" required="" id="pwd">
+                </div>
+                <div class="form-group" id="error" style="display: none;">
+
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-
-                <p class="text-muted text-center"> <a href="login.html#"><small>Forget the password？</small></a>
-                </p>
 
             </form>
         </div>
     </div>
-
     <!-- 全局js -->
     <script src=" {{asset('ladmin/js/jquery.min.js')}}"></script>
     <script src=" {{asset('ladmin/js/bootstrap.min.js')}}"></script>
@@ -61,3 +59,28 @@
 </body>
 
 </html>
+<script>
+    $(function () {
+        $(document).on("click",".btn",function () {
+            var data={};
+            data.name=$("#username").val();
+            data.pwd=$("#pwd").val();
+            $.ajax({
+                method:"POST",
+                url:"/login/login",
+                data:data,
+                dataType: "json",
+                success:function (res) {
+                    if(res.code==40017){
+                        alert(res.res);
+                        $("#error").css("display","block");
+                        $("#error").text(res.error_message);
+                    }else{
+                        alert(res.res);
+                        location.href='/admin/permission/index';
+                    }
+                }
+            })
+        })
+    })
+</script>
